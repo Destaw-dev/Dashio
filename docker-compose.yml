@@ -12,8 +12,8 @@ services:
       WEB_ORIGIN: ${WEB_ORIGIN}
       JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
     networks:
-      - listali-network
+      - server_listali-network
 
 networks:
-  listali-network:
+  server_listali-network:
     external: true
