@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import cookie from 'cookie';
+import type { CookieSerializeOptions } from 'cookie';
 import crypto from 'crypto';
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -15,14 +16,15 @@ import { resolvePermissions } from '../config/permissions';
 const router = express.Router();
 const ACCESS_EXPIRY = '15m';
 const REFRESH_EXPIRY_DAYS = 7;
-const COOKIE_OPTIONS = {
+const sameSite: CookieSerializeOptions['sameSite'] = process.env.NODE_ENV === 'production' ? 'none' : 'lax';
+const COOKIE_OPTIONS: CookieSerializeOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
+  sameSite,
   path: '/',
 };
-const ACCESS_COOKIE = { ...COOKIE_OPTIONS, maxAge: 15 * 60 * 1000 };
-const REFRESH_COOKIE = { ...COOKIE_OPTIONS, maxAge: REFRESH_EXPIRY_DAYS * 24 * 60 * 60 * 1000 };
+const ACCESS_COOKIE: CookieSerializeOptions = { ...COOKIE_OPTIONS, maxAge: 15 * 60 * 1000 };
+const REFRESH_COOKIE: CookieSerializeOptions = { ...COOKIE_OPTIONS, maxAge: REFRESH_EXPIRY_DAYS * 24 * 60 * 60 * 1000 };
 
 function setAuthCookies(res: Response, userId: string, role: string, refreshTokenValue: string): void {
   const accessToken = jwt.sign({ sub: userId, role }, JWT_SECRET, { expiresIn: ACCESS_EXPIRY });

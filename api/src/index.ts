@@ -17,7 +17,7 @@ const app = express();
 const DEFAULT_PORT = 5000;
 const requestedPort = Number(process.env.PORT) || DEFAULT_PORT;
 
-app.use(cors({ origin: process.env.WEB_ORIGIN || 'http://localhost:3000' || 'http://localhost:3001', credentials: true }));
+app.use(cors({ origin: process.env.WEB_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
