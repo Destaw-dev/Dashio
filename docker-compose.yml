@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-      container_name: dashio
     restart: unless-stopped
     ports:
       - "7000:7000"
