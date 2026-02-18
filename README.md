@@ -97,6 +97,13 @@ Run full stack (MongoDB + API + Web):
 docker compose up --build
 ```
 
+Run API-only stack for server deployment (MongoDB + API):
+
+```bash
+cp server.env.example .env
+docker compose -f docker-compose.api.yml up -d --build
+```
+
 Default ports:
 - Web: `3000`
 - API: `5000`
