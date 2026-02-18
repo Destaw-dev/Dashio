@@ -1,8 +1,8 @@
 # Dashio
 
 Customer analytics platform in a monorepo:
-- `apps/web`: Next.js 15 + React Query + Tailwind
-- `apps/api`: Express + TypeScript + MongoDB + JWT cookie auth
+- `web`: Next.js 15 + React Query + Tailwind
+- `api`: Express + TypeScript + MongoDB + JWT cookie auth
 - `packages/shared`: shared Zod schemas and types
 
 ## What You Get
@@ -32,8 +32,8 @@ Customer analytics platform in a monorepo:
 
 | Path | Purpose |
 |---|---|
-| `apps/web` | Frontend app |
-| `apps/api` | Backend API |
+| `web` | Frontend app |
+| `api` | Backend API |
 | `packages/shared` | Shared schemas/types |
 
 ## Quick Start (Local)
@@ -47,17 +47,17 @@ npm install
 ### 2. Configure environment
 
 ```bash
-cp apps/api/.env.example apps/api/.env
-cp apps/web/.env.example apps/web/.env.local
+cp api/.env.example api/.env
+cp web/.env.example web/.env.local
 ```
 
 Required values:
-- `apps/api/.env`
+- `api/.env`
   - `PORT` (default `5000`)
   - `WEB_ORIGIN` (default `http://localhost:3000`)
   - `MONGODB_URI`
   - `JWT_SECRET` (required in production)
-- `apps/web/.env.local`
+- `web/.env.local`
   - `NEXT_PUBLIC_API_URL` (for local, usually `http://localhost:5000`)
 
 ### 3. Build shared package
@@ -79,7 +79,7 @@ Default URLs:
 
 ## Database Utilities
 
-Run from `apps/api`:
+Run from `api`:
 
 ```bash
 npm run reset-db
@@ -218,15 +218,15 @@ npm run test
 Run per workspace:
 
 ```bash
-npm run test --workspace=apps/web
-npm run test --workspace=apps/api
+npm run test --workspace=web
+npm run test --workspace=api
 ```
 
 Build checks:
 
 ```bash
-npm run build --workspace=apps/api
-npm run build --workspace=apps/web
+npm run build --workspace=api
+npm run build --workspace=web
 ```
 
 ## License
