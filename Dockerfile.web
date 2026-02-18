@@ -1,0 +1,15 @@
+# Web – build from monorepo root (context: .)
+# Build with: docker build -f Dockerfile.web --build-arg NEXT_PUBLIC_API_URL=http://localhost:5000 .
+FROM node:20-alpine
+WORKDIR /app
+ARG NEXT_PUBLIC_API_URL=http://localhost:5000
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+COPY package.json package-lock.json ./
+COPY packages/shared packages/shared
+COPY apps/web apps/web
+RUN npm ci
+RUN npm run build --workspace=@dashio/shared
+RUN npm run build --workspace=@dashio/web
+ENV NODE_ENV=production
+EXPOSE 3000
+CMD ["npm", "run", "start", "--workspace=@dashio/web"]
