@@ -40,7 +40,7 @@ async function start(): Promise<void> {
   await connectDb();
   function tryListen(port: number): void {
     const server = app.listen(port, () => {
-      console.log(`API running at http://localhost:${port}`);
+      console.log(`API running at port:${port}`);
     });
     server.on('error', (err: NodeJS.ErrnoException) => {
       if (err.code === 'EADDRINUSE' && port === requestedPort) {
