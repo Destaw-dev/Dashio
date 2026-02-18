@@ -1,12 +1,19 @@
-# API – build from monorepo root (context: .)
 FROM node:20-alpine
-WORKDIR /
+WORKDIR /app
+
 COPY package.json package-lock.json ./
-COPY packages/shared packages/shared
-COPY api api
-RUN npm ci
+COPY packages/shared ./packages/shared
+COPY api ./api
+
+# חשוב: התקנה עם workspaces
+RUN npm ci --workspaces
+
+# build
 RUN npm run build --workspace=@dashio/shared
 RUN npm run build --workspace=@dashio/api
+
 ENV NODE_ENV=production
+ENV PORT=7000
 EXPOSE 7000
+
 CMD ["node", "api/dist/index.js"]
