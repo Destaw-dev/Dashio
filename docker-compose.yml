@@ -1,15 +1,19 @@
 services:
-
   api:
     build:
       context: .
       dockerfile: Dockerfile.api
+    container_name: dashio-api
     restart: unless-stopped
-    ports:
-      - "7000:7000"
     environment:
       NODE_ENV: production
       PORT: 7000
       MONGODB_URI: ${MONGODB_URI}
       WEB_ORIGIN: ${WEB_ORIGIN}
       JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+    networks:
+      - listali-network
+
+networks:
+  listali-network:
+    external: true
